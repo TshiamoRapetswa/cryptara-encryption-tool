@@ -168,7 +168,7 @@ Uses [Font Awesome 6](https://fontawesome.com/) via CDN:
 ## 📸 Screenshots
 
 ### Encryption View
-![Demo 1 — Encryption](assets/demo1.png)
+https://github.com/TshiamoRapetswa/cryptara-encryption-tool/blob/3b6d7732b468c4d4ee172777b7494a09218cecb9/demo1.png
 
 ### Decryption View
 ![Demo 2 — Decryption](assets/demo2.png)
