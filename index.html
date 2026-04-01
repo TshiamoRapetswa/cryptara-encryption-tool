@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cryptara — Secure Text Encryption</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- CryptoJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Background grid -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="brand">
+        <img src="assets/logo.png" alt="Cryptara logo icon" class="brand-icon" />
+      </a>
+      <nav class="header-nav">
+        <span class="nav-badge"><i class="fa-solid fa-shield-alt"></i> AES‑256</span>
+        <span class="nav-badge"><i class="fa-solid fa-lock"></i> Client‑Side</span>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow"><i class="fa-solid fa-shield-alt"></i> Browser‑Based Cryptography</div>
+      <h1 class="hero-title">Encrypt. <span class="accent">Protect.</span><br />Decrypt.</h1>
+      <p class="hero-sub">Military‑grade AES‑256 encryption running entirely in your browser. Your data never leaves your device.</p>
+    </div>
+  </section>
+
+  <!-- ===== MAIN TOOL ===== -->
+  <main class="tool-wrapper">
+
+    <!-- Mode Toggle -->
+    <div class="mode-toggle" role="group" aria-label="Encryption mode">
+      <button class="mode-btn active" id="btn-encrypt" data-mode="encrypt">
+        <i class="fa-solid fa-lock"></i> Encrypt
+      </button>
+      <button class="mode-btn" id="btn-decrypt" data-mode="decrypt">
+        <i class="fa-solid fa-unlock"></i> Decrypt
+      </button>
+    </div>
+
+    <!-- Tool Card -->
+    <div class="tool-card">
+
+      <!-- Left Panel: Input -->
+      <div class="panel panel-input">
+        <div class="panel-header">
+          <span class="panel-label" id="input-label">
+            <i class="fa-solid fa-pen-to-square"></i> Plaintext Input
+          </span>
+        </div>
+
+        <textarea
+          id="text-input"
+          class="text-area"
+          placeholder="Enter text to encrypt…"
+          aria-label="Text input"
+          spellcheck="false"
+        ></textarea>
+
+        <!-- Key Field -->
+        <div class="key-field">
+          <label for="passphrase" class="key-label">
+            <i class="fa-solid fa-key"></i> Passphrase / Key
+          </label>
+          <div class="key-input-wrap">
+            <input
+              type="password"
+              id="passphrase"
+              class="key-input"
+              placeholder="Enter your secret passphrase"
+              aria-label="Passphrase"
+              autocomplete="off"
+            />
+            <button class="toggle-visibility" id="toggle-pass" aria-label="Toggle passphrase visibility" title="Show/hide passphrase">
+              <i class="fa-solid fa-eye" id="eye-icon"></i>
+            </button>
+          </div>
+          <p class="key-hint"><i class="fa-solid fa-circle-info"></i> Use the same passphrase to decrypt.</p>
+        </div>
+
+        <!-- Action Button -->
+        <button class="action-btn" id="action-btn">
+          <i class="fa-solid fa-lock" id="action-icon"></i>
+          <span id="action-label">Encrypt Text</span>
+        </button>
+      </div>
+
+      <!-- Divider Arrow -->
+      <div class="panel-divider" aria-hidden="true">
+        <div class="divider-track">
+          <i class="fa-solid fa-chevron-right divider-icon" id="divider-icon"></i>
+        </div>
+      </div>
+
+      <!-- Right Panel: Output -->
+      <div class="panel panel-output">
+        <div class="panel-header">
+          <span class="panel-label" id="output-label">
+            <i class="fa-solid fa-lock"></i> Ciphertext Output
+          </span>
+          <button class="copy-btn" id="copy-btn" title="Copy to clipboard" aria-label="Copy output">
+            <i class="fa-solid fa-copy"></i> Copy
+          </button>
+        </div>
+
+        <div class="output-box" id="output-box" aria-live="polite" aria-label="Output">
+          <div class="output-placeholder" id="output-placeholder">
+            <i class="fa-solid fa-shield-alt placeholder-icon"></i>
+            <span>Your result will appear here…</span>
+          </div>
+          <textarea id="output-text" class="text-area output-text-area" readonly aria-label="Output text" style="display:none;" spellcheck="false"></textarea>
+        </div>
+
+        <!-- Status Message -->
+        <div class="status-message" id="status-message" role="alert" aria-live="assertive"></div>
+      </div>
+
+    </div><!-- /tool-card -->
+
+    <!-- Info Cards -->
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-shield-alt"></i></div>
+        <h3>AES‑256 Encryption</h3>
+        <p>Uses industry-standard Advanced Encryption Standard with a 256-bit key derived from your passphrase via PBKDF2.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-circle-nodes"></i></div>
+        <h3>100% Client‑Side</h3>
+        <p>All cryptographic operations run locally in your browser using the CryptoJS library. Zero data transmitted.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-key"></i></div>
+        <h3>Passphrase Security</h3>
+        <p>Your passphrase is never stored. A random salt and IV are generated per encryption for maximum security.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <img src="assets/logo.png" alt="Cryptara" class="footer-logo" />
+      <p class="footer-text">Cryptara &mdash; Secure Text Encryption Tool &copy; 2025</p>
+      <p class="footer-sub">Powered by AES‑256 · CryptoJS · Runs entirely in your browser</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
